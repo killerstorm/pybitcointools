@@ -2,6 +2,14 @@
 import sys, json, re
 from pybitcointools import *
 from pybitcointools.mnemonic import *
+import python_sha3
+
+def sha3(x):
+    return python_sha3.sha3_256(x).digest()
+
+def eth_addr(x):
+    p = encode_pubkey(privtopub(x), 'bin_electrum')
+    return sha3(p)[12:].encode('hex')
 
 if len(sys.argv) == 1:
     print "keygen <command> ..."
@@ -13,9 +21,12 @@ elif sys.argv[1] == 'generate':
     key = sha256(key_string)
     print '"' + key_string + '"'
     print privtoaddr(key)
+    print eth_addr(key)
+    
 elif sys.argv[1] == 'decode':
     key_string = sys.argv[2]
     key = sha256(key_string)
-    print encode_privkey(key, 'wif')
+    print ("wif", encode_privkey(key, 'wif'))
+    print ("hex", encode_privkey(key, 'hex'))         
     print privtoaddr(key)
 
