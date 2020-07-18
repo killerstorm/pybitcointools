@@ -21,7 +21,7 @@ elif sys.argv[1] == 'generate':
     key = sha256(key_string)
     print '"' + key_string + '"'
     print privtoaddr(key)
-    print eth_addr(key)
+    print "0x0" + eth_addr(key)
     
 elif sys.argv[1] == 'decode':
     key_string = sys.argv[2]
@@ -29,4 +29,5 @@ elif sys.argv[1] == 'decode':
     print ("wif", encode_privkey(key, 'wif'))
     print ("hex", encode_privkey(key, 'hex'))         
     print privtoaddr(key)
+    print "0x0" + eth_addr(key)
 
